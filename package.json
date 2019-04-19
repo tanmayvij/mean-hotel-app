@@ -1,0 +1,30 @@
+{
+  "name": "hotel-app",
+  "version": "1.0.0",
+  "description": "Basic Hotel Management app using MEAN Stack",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tanmayvij/mean-hotel-app.git"
+  },
+  "keywords": [
+    "mean",
+    "hotel"
+  ],
+  "author": "Tanmay Vij",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tanmayvij/mean-hotel-app/issues"
+  },
+  "homepage": "https://github.com/tanmayvij/mean-hotel-app#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "mocha": "^6.1.4"
+  }
+}
