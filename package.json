@@ -23,7 +23,8 @@
   "homepage": "https://github.com/tanmayvij/mean-hotel-app#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "mongodb": "^3.2.3"
   },
   "devDependencies": {
     "mocha": "^6.1.4"
