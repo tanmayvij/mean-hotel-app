@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/tanmayvij/mean-hotel-app#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.4"
   },
   "devDependencies": {

@@ -7,5 +7,8 @@ router.route('/hotels')
 	
 router.route('/hotels/:hotelId')
 	.get(hotels.hotelsGetOne);
+	
+router.route('/hotels/new')
+	.post(hotels.hotelsAddOne);
 
 module.exports = router;
