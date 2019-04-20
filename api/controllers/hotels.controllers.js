@@ -1,14 +1,50 @@
-var dbconn = require('../data/dbconnection');
-var ObjectId = require('mongodb').ObjectId;
+var mongoose = require('mongoose');
+var Hotel = mongoose.model('Hotel');
+
+var runGeoQuery = function(req, res) {
+	var lng = parseFloat(req.query.lng);
+	var lat = parseFloat(req.query.lat);
+	
+	var point = {
+		type: "Point",
+		coordinates: [lng, lat]
+	};
+	var maxDist = 5000;
+	if(req.query.maxDist)
+	{
+		maxDist = (parseInt(req.query.maxDist, 10)*1000);
+	}
+	Hotel
+		.aggregate([
+			{
+				$geoNear: {
+					near: point,
+					spherical: true,
+					maxDistance: maxDist,
+					num: 5,
+					distanceField: "dist.calculated"
+				}
+			}
+		]).then( function(results) {
+			console.log('Geo Results', results);
+			res
+				.status(200)
+				.json(results);
+		});
+};
 
 module.exports.hotelsGetAll = function(req, res) {
 	
-	var db = dbconn.get();
-	var collection = db.collection('hotels');
-	
+		
 	var offset = 0;
 	var count = 5;
-		
+	
+	if(req.query && req.query.lat && req.query.lng)
+	{
+		runGeoQuery(req, res);
+		return;
+	}
+	
 	if(req.query && req.query.offset)
 	{
 		offset = parseInt(req.query.offset, 10);
@@ -17,26 +53,23 @@ module.exports.hotelsGetAll = function(req, res) {
 	{
 		count = parseInt(req.query.count, 10);
 	}
-	collection.find()
+	Hotel
+		.find()
 	.skip(offset)
 	.limit(count)
-	.toArray(function(err, data) {
-		
-		console.log("GET", count, "Hotels' data");
+		.exec(function(err, data) {
+			console.log("GET", count, "Hotels' data");
 		res.status(200)
 		.json(data);
-	});
-	
+		});
 	
 };
 
 module.exports.hotelsGetOne = function(req, res) {
-	var db = dbconn.get();
-	var collection = db.collection('hotels');
 	
 	var hotelId = req.params.hotelId;
 	
-	collection.findOne({'_id': ObjectId(hotelId)}, function(err, data) {
+	Hotel.findById(hotelId, function(err, data) {
 		console.log("GET hotelId", hotelId);
 		res.status(200)
 		.json(data);
@@ -44,7 +77,7 @@ module.exports.hotelsGetOne = function(req, res) {
 };
 
 module.exports.hotelsAddOne = function(req, res) {
-	var db = dbconn.get();
+	/*var db = dbconn.get();
 	var collection = db.collection('hotels');
 	var newHotel;
 	
@@ -61,5 +94,5 @@ module.exports.hotelsAddOne = function(req, res) {
 	else {
 		console.log("Error 400: Required Data missing from Request Body");
 		res.status(400).send("Error 400: Required Data missing from Request Body");
-	}
+	}*/
 };
