@@ -73,7 +73,8 @@ var _addReview = function(req, res, data) {
 	data.reviews.push({
 		name : req.body.name,
 		rating : parseInt(req.body.rating, 10),
-		review : req.body.review
+		review : req.body.review,
+		id : req.userid
 	});
 	data.save(function(err, hotelUpdated){
 		if(err) {
@@ -124,12 +125,18 @@ module.exports.reviewsUpdate = function(req, res) {
 		if(err)	{
 			returnData = err;
 			statusCode = 500;
+			res
+			.status(statusCode)
+			.json(returnData);
 		}
 		else {
 			if(!data)
 			{
 				returnData = { "error": "Hotel doesn't exist" };
 				statusCode = 404;
+				res
+				.status(statusCode)
+				.json(returnData);
 			}
 			else {
 				console.log("GET hotelId", hotelId, "review", reviewId);
@@ -138,39 +145,40 @@ module.exports.reviewsUpdate = function(req, res) {
 				{
 					returnData = { 'error': 'Review not found'}
 					statusCode = 404;
+					res
+					.status(statusCode)
+					.json(returnData);
 				}
 				else {
-					if(req.level !== 5 && req.userid !== data.name)
+					if(req.level != 5 && req.userid != review.id)
 					{
 						res.status(403).json({ 'error' : 'forbidden'});
 						return;
 					}
-					console.log("UPDATE reviewId", reviewId);
-					review.name = req.body.name;
-					review.review = req.body.review;
-					review.rating = parseInt(req.body.rating, 10);
-					data.save(function(err, hotelUpdated){
-						if(err) {
-							statusCode = 500;
-							returnData = err;
-						}
-						else {
-							statusCode = 204;
-							returnData = null;
-							res
-							.status(statusCode)
-							.json(returnData);
-						}
-					});
-					
+					else {
+						console.log("UPDATE reviewId", reviewId);
+						review.name = req.body.name;
+						review.review = req.body.review;
+						review.rating = parseInt(req.body.rating, 10);
+						data.save(function(err, hotelUpdated){
+							if(err) {
+								statusCode = 500;
+								returnData = err;
+								res
+								.status(statusCode)
+								.json(returnData);
+							}
+							else {
+								statusCode = 204;
+								returnData = null;
+								res
+								.status(statusCode)
+								.json(returnData);
+							}
+						});
+					}
 				}
 			}
-		}
-		if(statusCode == 404 || statusCode == 500)
-		{
-			res
-			.status(statusCode)
-			.json(returnData);
 		}
 	});
 };
@@ -202,7 +210,7 @@ module.exports.reviewsDelete = function(req, res) {
 					statusCode = 404;
 				}
 				else {
-					if(req.level !== 5 && req.userid !== data.name)
+					if(req.level != 5 && req.userid != review.id)
 					{
 						res.status(403).json({ 'error' : 'forbidden'});
 						return;
