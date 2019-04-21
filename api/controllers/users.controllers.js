@@ -136,7 +136,3 @@ module.exports.checkAdmin = function(req, res, next) {
 		res.status(401).json({'error' : 'no token provided'});
 	}
 };
-
-module.exports.logout = function(req, res) {
-	
-};
