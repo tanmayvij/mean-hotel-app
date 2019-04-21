@@ -27,5 +27,11 @@ router.route('/users/login')
 	
 router.route('/users/register')
 	.post(users.register);
+	
+router.route('/users/forgot')
+	.post(users.forgot);
+
+router.route('/users/resetpass')
+	.get(users.resetpass);
 
 module.exports = router;

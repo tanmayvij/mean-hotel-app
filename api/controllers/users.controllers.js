@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('jsonwebtoken');
+var nodemailer = require('nodemailer');
 const jwtkey = 's3cr3tK3y';
 
 module.exports.register = function(req, res) {
@@ -78,6 +79,157 @@ module.exports.login = function(req, res) {
 			}
 		}
 	});
+};
+
+module.exports.forgot = function(req, res) {
+	console.log("Forgot Password request");
+	
+	var userid = req.body.userid;
+	
+	User
+	.findOne({
+		userid : userid
+	})
+	.exec(function(err, data) {
+		if(err)	{
+				console.log("Error getting user");
+				res.status(500).json(err);
+		}
+		else {
+			if(!data)
+			{
+				res.status(404).json({
+					"error": "User not found"
+				});
+			}
+			else {
+				console.log("Send reset email", data.email);
+				var statusCode = 200, returnData = "";
+				// Generate token
+				var token = "";
+				var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+				for (var i = 0; i < 32; i++)
+				{
+					token += possible.charAt(Math.floor(Math.random() * possible.length));
+				}
+				// Update token in database
+				data.token = token;
+				data.save(function(err, result){
+					if(err)
+					{
+						statusCode = 500;
+						returnData = err;
+					}
+				});
+				if(statusCode == 500) {
+					res.status(statusCode).json(returnData);
+					return;
+				}
+				// Send email
+				
+				var transporter = nodemailer.createTransport({
+					service: 'gmail',
+					auth: {
+						user: process.env.emailid,
+						pass: process.env.emailpass
+					}
+				});
+				
+				var mailOptions = {
+					from: 'no-reply@example.com',
+					to: data.email,
+					subject: 'Password reset request',
+					text: 'You have requested to reset your password. Please enter the following token on the reset page: ' + token
+				};
+				
+				transporter.sendMail(mailOptions, function(error, info){
+					if (error) {
+						console.log(error);
+						statusCode = 500;
+						returnData = err;
+						res.status(statusCode).json(returnData);
+					}
+					else {
+						console.log('Email sent: ' + info.response);
+						statusCode = 200;
+						returnData = { "success" : "reset link sent" };
+						res.status(statusCode).json(returnData);
+					}
+				});
+			}
+		}
+	});
+};
+
+module.exports.resetpass = function(req, res) {
+	console.log("Password reset request");
+	
+	if(req.query && req.query.userid && req.query.token)
+	{
+		var userid = req.query.userid;
+		var token = req.query.token;
+	
+		User
+		.findOne({
+			userid : userid
+		})
+		.exec(function(err, data) {
+			if(err)	{
+					console.log("Error getting user");
+					res.status(500).json(err);
+			}
+			else {
+				if(!data)
+				{
+					res.status(404).json({
+						"error": "User not found"
+					});
+				}
+				else {
+					console.log("Reset password", userid);
+					
+					// Verify token
+					if(token == data.token)
+					{
+						// Generate new password					
+						var temp = "";
+						var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+						for (var i = 0; i < 10; i++)
+						{
+							temp += possible.charAt(Math.floor(Math.random() * possible.length));
+						}	
+						
+						var password = bcrypt.hashSync(temp, bcrypt.genSaltSync(10));
+						
+						// Update password & remove token in database
+						data.password = password;
+						data.token = undefined;
+						data.save(function(err, result){
+							if(err)
+							{
+								res.status(500).json(err);
+							}
+							else {
+								res.status(204).json();
+							}
+						});
+					}
+					else
+					{
+						res
+						.status(401)
+						.json({"error" : "invalid token"});
+					}
+				}
+			}
+		});
+	}
+	else
+	{
+		res
+		.status(400)
+		.json({"error" : "params missing"});
+	}
 };
 
 module.exports.authenticate = function(req, res, next) {
