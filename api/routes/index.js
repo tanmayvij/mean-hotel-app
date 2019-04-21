@@ -28,6 +28,4 @@ router.route('/users/login')
 router.route('/users/register')
 	.post(users.register);
 
-router.route('/users/logout')
-	.post(users.logout);
 module.exports = router;
