@@ -41,3 +41,4 @@ process.on('SIGTERM', function() {
 });
 
 require('./hotels.model.js');
+require('./users.model.js');

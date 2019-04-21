@@ -140,6 +140,11 @@ module.exports.reviewsUpdate = function(req, res) {
 					statusCode = 404;
 				}
 				else {
+					if(req.level !== 5 && req.userid !== data.name)
+					{
+						res.status(403).json({ 'error' : 'forbidden'});
+						return;
+					}
 					console.log("UPDATE reviewId", reviewId);
 					review.name = req.body.name;
 					review.review = req.body.review;
@@ -197,6 +202,11 @@ module.exports.reviewsDelete = function(req, res) {
 					statusCode = 404;
 				}
 				else {
+					if(req.level !== 5 && req.userid !== data.name)
+					{
+						res.status(403).json({ 'error' : 'forbidden'});
+						return;
+					}
 					console.log("DELETE reviewId", reviewId);
 					data.reviews.id(reviewId).remove();
 					data.save(function(err, hotelUpdated){
