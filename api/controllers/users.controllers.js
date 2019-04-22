@@ -146,7 +146,7 @@ module.exports.forgot = function(req, res) {
 					if (error) {
 						console.log(error);
 						statusCode = 500;
-						returnData = err;
+						returnData = error;
 						res.status(statusCode).json(returnData);
 					}
 					else {
@@ -210,7 +210,7 @@ module.exports.resetpass = function(req, res) {
 								res.status(500).json(err);
 							}
 							else {
-								res.status(204).json();
+								res.status(200).json({ 'newPassword' : temp });
 							}
 						});
 					}
