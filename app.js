@@ -9,6 +9,7 @@ app.set('port', 8080);
 
 app.use(function(req, res, next) {
 	console.log(req.method, req.url);
+	res.header("Access-Control-Allow-Origin", "*");
 	next();
 });
 app.use(express.static(path.join(__dirname, 'public')));
