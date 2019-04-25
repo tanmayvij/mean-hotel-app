@@ -11,7 +11,7 @@ app.use(function(req, res, next) {
 	console.log(req.method, req.url);
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE,OPTIONS');
-	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,x-access-token');
+	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,x-access-token,Authorization');
 	res.setHeader('Access-Control-Allow-Credentials', true);
 	next();
 });
