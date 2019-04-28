@@ -1,0 +1,13 @@
+<header>
+  <div class="container">
+    <nav>
+      <ul>
+        <li><a routerLink="/">Home</a></li>
+        <li><a *ngIf="!loggedIn()" routerLink="/auth">Login</a></li>
+        <li><a *ngIf="loggedIn()" (click)="logout()">Logout</a></li>
+        <li><a routerLink="/hotels">Hotels</a></li>
+        <li><a routerLink="/add">Add Hotel</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>

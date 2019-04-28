@@ -1,0 +1,26 @@
+<br>
+<form (ngSubmit)="login()" [formGroup]="loginForm"> 
+  <h2>Login</h2>
+  <input type="text" formControlName="userid" placeholder="User ID..." required="true">
+  <input type="password" formControlName="password" placeholder="Password..." required="true">
+  <button type="submit">Login</button>
+</form>
+
+<form (ngSubmit)="register()" [formGroup]="regForm"> 
+    <h2>Sign Up</h2>
+    <input type="text" formControlName="name" placeholder="Name..." required="true">
+    <input type="email" formControlName="email" placeholder="Email..." required="true">
+    <input type="tel" formControlName="phone" placeholder="Phone..." required="true">
+    <input type="text" formControlName="userid" placeholder="User ID..." required="true">
+    <input type="password" formControlName="password" placeholder="Password..." required="true">
+    <button type="submit">Register</button>
+  </form>
+
+  <form (keydown.enter)="$event.preventDefault()" (ngSubmit)="reset()" [formGroup]="forgotForm"> 
+      <h2>Forgot Password</h2>
+      <input [style.display]="emailSent ? 'none' : 'block'" type="text" formControlName="userid" placeholder="User ID..." required="true">
+      <button type="button" [style.display]="emailSent ? 'none' : 'block'" (click)="forgot()">Send Reset Email</button><br>
+      <input [style.display]="!emailSent ? 'none' : 'block'" type="text" formControlName="token" placeholder="Token..." required="true">
+      <button [style.display]="!emailSent ? 'none' : 'block'" type="submit">Reset Password</button>
+      <p>{{ newPassword }}</p>
+  </form>

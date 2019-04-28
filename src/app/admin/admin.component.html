@@ -1,0 +1,78 @@
+<div align="center" style="background-color: #fff">
+  <form *ngIf="hotel" (ngSubmit)="onHotel()" [formGroup]="hotelForm">
+	<div class="row">
+		<div class="input-field col s6">
+			<input name="name" type="text" formControlName="name" class="validate" [(ngModel)]=" hotel.name ">
+			<label class="active" for="name">Name</label>
+		</div>
+	</div>
+	<div class="row">
+			<div class="input-field col s6">
+				<input name="address" type="text" formControlName="address" class="validate" [(ngModel)]=" hotel.location.address ">
+				<label class="active" for="address">Address</label>
+			</div>
+		</div>	
+		<div class="row">
+				<div class="input-field col s6">
+					<input name="description" type="text" formControlName="description" [(ngModel)]=" hotel.description " class="validate">
+					<label class="active" for="description">Description</label>
+				</div>
+		</div>	
+	<div class="row">
+		<div class="input-field col s6">
+			<input name="lng" type="text" formControlName="lng" [(ngModel)]=" hotel.location.coordinates[0] " class="validate">
+			<label class="active" for="lng">Longitude</label>
+		</div>
+	</div>
+	<div class="row">
+		<div class="input-field col s6">
+			<input name="lat" type="text" formControlName="lat" [(ngModel)]=" hotel.location.coordinates[1] " class="validate">
+			<label class="active" for="lat">Latitude</label>
+		</div>
+	</div>
+	<div class="row">
+			<div class="input-field col s6">
+				<input name="stars" type="text" formControlName="stars" [(ngModel)]=" hotel.stars " class="validate">
+				<label class="active" for="stars">Stars</label>
+			</div>
+		</div>
+		<div class="row">
+				<div class="input-field col s6">
+					<input name="currency" type="text" formControlName="currency" [(ngModel)]=" hotel.currency " class="validate">
+					<label class="active" for="currency">Currency</label>
+				</div>
+			</div>
+			<div class="row">
+					<div class="input-field col s6">
+						<input name="services" type="text" formControlName="services" [(ngModel)]=" services " class="validate">
+						<label class="active" for="services">Services</label>
+					</div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+              <input name="photos" type="text" formControlName="photos" [(ngModel)]=" photos " class="validate">
+              <label class="active" for="photos">Photos</label>
+            </div>
+          </div>
+  	<button class="waves-effect waves-light btn" type="submit">Save</button>
+  </form>
+</div>
+<h3>Reviews:</h3>
+    <ul style="background-color: #fff; padding: 20px 20px 20px 20px">
+        <li *ngFor="let review of reviews">
+            {{ review.name }} |
+            {{ review.review }} |
+            Rated {{ review.rating }} stars |
+            <a (click)="onReview(review._id)">Edit</a> |
+            <a (click)="deleteReview(review._id)">Delete</a>
+            <br>
+        </li>
+    </ul>
+  <form class="modal" [style.display]="editClicked ? 'block' : none" (ngSubmit)="editReviewMethod(editReview._id)" [formGroup]="revForm">
+    <div class="modal-content">
+        <span class="close" (click)="editClicked=false">&times;</span>
+          <input type="text" placeholder="Review..." [(ngModel)]="editReview.review" formControlName="review" required>
+          <input type="number" placeholder="Rating..." formControlName="rating" [(ngModel)]="editReview.rating" required>
+          <button type="submit">Save</button>
+    </div>
+      </form>    

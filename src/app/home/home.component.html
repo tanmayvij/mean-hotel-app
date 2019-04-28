@@ -1,0 +1,36 @@
+<h1>Hotel Management System</h1>
+<div align="center" style="background-color: #fff">
+  <form (ngSubmit)="onSubmit()" [formGroup]="hotelForm">
+    <div class="row">
+      <div class="input-field col s6">
+        <input name="offset" type="number" formControlName="offset" class="validate">
+        <label class="active" for="offset">Offset</label>
+      </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s6">
+          <input name="count" formControlName="count" type="number" class="validate">
+          <label class="active" for="count">Count</label>
+        </div>
+      </div>
+      <div class="row">
+          <div class="input-field col s6">
+            <input name="lat" type="text" formControlName="lat" class="validate">
+            <label class="active" for="lat">Latitude</label>
+          </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+              <input name="lng" type="text" formControlName="lng" class="validate">
+              <label class="active" for="lng">Longitude</label>
+            </div>
+          </div>
+          <div class="row">
+              <div class="input-field col s6">
+                <input name="maxDist" type="number" formControlName="maxDist" class="validate">
+                <label class="active" for="maxDist">Maximum Distance</label>
+              </div>
+            </div>
+    <button class="waves-effect waves-light btn" type="submit">Find Hotels</button>
+  </form>
+</div>

@@ -1,0 +1,25 @@
+<div *ngIf="hotel">
+    <h1>{{ hotel.name }}</h1>
+    <i class="material-icons" *ngFor="let i of Arr(hotel.stars)">stars</i>
+    <p>{{ hotel.description }}</p>
+    <h3>Address:</h3> {{ hotel.location.address }}
+    <h3>Services:</h3>
+    <ul>
+        <li *ngFor="let service of hotel.services">
+            {{ service }}
+        </li>
+    </ul>
+    <h3>Reviews:</h3>
+    <ul>
+        <li *ngFor="let review of reviews">
+            {{ review.name }} says: {{ review.review }}<br>
+            Rated <i class="material-icons" *ngFor="let i of Arr(review.rating)">stars</i>
+        </li>
+    </ul>
+    <h3>Add a review:</h3>
+    <form (ngSubmit)="onSubmit()" [formGroup]="revForm"> 
+        <input type="text" formControlName="review" placeholder="Review..." required>
+        <input type="number" formControlName="rating" placeholder="Rating..." required>
+        <button type="submit">Add</button>
+    </form>
+</div>

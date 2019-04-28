@@ -1,0 +1,8 @@
+<br>
+<table border="1" style="border-collapse: collapse" *ngIf="hotels">
+  <tr *ngFor="let hotel of hotels">
+    <a routerLink="/hotels/{{ hotel._id }}"> {{ hotel.name }} </a> |
+    <a routerLink="/hotels/{{ hotel._id }}/edit">Edit</a> |
+    <a (click)="delete(hotel._id)">Delete</a>
+  </tr>
+</table>

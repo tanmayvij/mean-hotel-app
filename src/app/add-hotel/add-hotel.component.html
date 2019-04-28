@@ -1,0 +1,60 @@
+<h1>Add new hotel</h1>
+<div align="center" style="background-color: #fff">
+  <form (ngSubmit)="onSubmit()" [formGroup]="hotelForm">
+	<div class="row">
+		<div class="input-field col s6">
+			<input name="name" type="text" formControlName="name" class="validate">
+			<label class="active" for="name">Name</label>
+		</div>
+	</div>
+	<div class="row">
+			<div class="input-field col s6">
+				<input name="address" type="text" formControlName="address" class="validate">
+				<label class="active" for="address">Address</label>
+			</div>
+		</div>	
+		<div class="row">
+				<div class="input-field col s6">
+					<input name="description" type="text" formControlName="description" class="validate">
+					<label class="active" for="description">Description</label>
+				</div>
+		</div>	
+	<div class="row">
+		<div class="input-field col s6">
+			<input name="lng" type="text" formControlName="lng" class="validate">
+			<label class="active" for="lng">Longitude</label>
+		</div>
+	</div>
+	<div class="row">
+		<div class="input-field col s6">
+			<input name="lat" type="text" formControlName="lat" class="validate">
+			<label class="active" for="lat">Latitude</label>
+		</div>
+	</div>
+	<div class="row">
+			<div class="input-field col s6">
+				<input name="stars" type="text" formControlName="stars" class="validate">
+				<label class="active" for="stars">Stars</label>
+			</div>
+		</div>
+		<div class="row">
+				<div class="input-field col s6">
+					<input name="currency" type="text" formControlName="currency" class="validate">
+					<label class="active" for="currency">Currency</label>
+				</div>
+			</div>
+			<div class="row">
+					<div class="input-field col s6">
+						<input name="services" type="text" formControlName="services" class="validate">
+						<label class="active" for="services">Services</label>
+					</div>
+				</div>
+				<div class="row">
+						<div class="input-field col s6">
+							<input name="photos" type="text" formControlName="photos" class="validate">
+							<label class="active" for="photos">Photos</label>
+						</div>
+					</div>
+  	<button class="waves-effect waves-light btn" type="submit">Add</button>
+  </form>
+</div>

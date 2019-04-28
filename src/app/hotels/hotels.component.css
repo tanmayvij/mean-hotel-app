@@ -1,0 +1,12 @@
+table {
+    border-collapse: collapse;
+}
+table a {
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer
+}
+table a:hover {
+    text-decoration: underline
+}
