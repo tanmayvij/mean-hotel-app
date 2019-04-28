@@ -64,6 +64,7 @@ module.exports.login = function(req, res) {
 			{
 				var payload = {
 					userid : userid,
+					username : user.name,
 					level: user.level
 				};
 				var token = jwt.sign(payload, jwtkey, { expiresIn : 3600*24 })
@@ -247,6 +248,7 @@ module.exports.authenticate = function(req, res, next) {
 			{
 				req.userid = decoded.userid;
 				req.level = decoded.level;
+				req.username = decoded.username;
 				next();
 			}
 		});

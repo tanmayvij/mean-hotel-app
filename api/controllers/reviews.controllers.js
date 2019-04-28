@@ -71,7 +71,7 @@ module.exports.reviewsGetOne = function(req, res) {
 
 var _addReview = function(req, res, data) {
 	data.reviews.push({
-		name : req.body.name,
+		name : req.username,
 		rating : parseInt(req.body.rating, 10),
 		review : req.body.review,
 		id : req.userid
@@ -157,7 +157,7 @@ module.exports.reviewsUpdate = function(req, res) {
 					}
 					else {
 						console.log("UPDATE reviewId", reviewId);
-						review.name = req.body.name;
+						review.name = req.username;
 						review.review = req.body.review;
 						review.rating = parseInt(req.body.rating, 10);
 						data.save(function(err, hotelUpdated){
