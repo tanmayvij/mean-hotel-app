@@ -27,11 +27,11 @@ export class AddHotelComponent implements OnInit {
   ngOnInit() {
   }
 	onSubmit() {
-		let url: string = "http://35.196.35.2:8080/api/hotels";
+		let url: string = "/api/hotels";
 		this.data.postData(url, this.hotelForm.value).subscribe(data => {
 			console.log(data);
 			this.hotelForm.reset();
-			// Notification success message
+			M.toast({html: "Added successfully", displayLength: 2000});
 		},
     error => M.toast({html: error.error.error, displayLength: 2000})
     );

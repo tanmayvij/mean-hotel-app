@@ -52,7 +52,7 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.url = "http://35.196.35.2:8080/api/hotels/" + this.route.snapshot.params.hotelId;
+    this.url = "/api/hotels/" + this.route.snapshot.params.hotelId;
     this.data.getData(this.url).subscribe(data => {
       this.hotel = data;
       for(let service in data['services'])
@@ -73,7 +73,7 @@ export class AdminComponent implements OnInit {
     this.revSubmitted = false;
   }
   onHotel() {
-		let url: string = `http://35.196.35.2:8080/api/hotels/${this.route.snapshot.params.hotelId}`;
+		let url: string = `/api/hotels/${this.route.snapshot.params.hotelId}`;
 		this.data.putData(url, this.hotelForm.value).subscribe(data => {
 			console.log(data);
 			this.router.navigate([`hotels/${this.route.snapshot.params.hotelId}`]);
@@ -84,7 +84,7 @@ export class AdminComponent implements OnInit {
   onReview(id)
   {
     this.editClicked = true;
-    let url: string = `http://35.196.35.2:8080/api/hotels/${this.route.snapshot.params.hotelId}/reviews/${id}`;
+    let url: string = `/api/hotels/${this.route.snapshot.params.hotelId}/reviews/${id}`;
     this.data.getData(url).subscribe(data => {
       this.editReview = data;
     },
@@ -93,7 +93,7 @@ export class AdminComponent implements OnInit {
   }
   editReviewMethod(id)
   {
-    this.url = `http://35.196.35.2:8080/api/hotels/${this.route.snapshot.params.hotelId}/reviews/${id}`;
+    this.url = `/api/hotels/${this.route.snapshot.params.hotelId}/reviews/${id}`;
     let review: Object = {
       "review": this.revForm.controls.review.value,
       "rating": this.revForm.controls.rating.value
@@ -110,7 +110,7 @@ export class AdminComponent implements OnInit {
   }
   deleteReview(id)
   {
-    this.url = `http://35.196.35.2:8080/api/hotels/${this.route.snapshot.params.hotelId}/reviews/${id}`;
+    this.url = `/api/hotels/${this.route.snapshot.params.hotelId}/reviews/${id}`;
     this.data.deleteData(this.url).subscribe(data => {
       this.getReviews();
       console.log(data)
@@ -120,7 +120,7 @@ export class AdminComponent implements OnInit {
 
   }
   getReviews() {
-    let url = `http://35.196.35.2:8080/api/hotels/${this.route.snapshot.params.hotelId}/reviews`;
+    let url = `/api/hotels/${this.route.snapshot.params.hotelId}/reviews`;
     this.data.getData(url).subscribe(data => {
       this.reviews = data;
     },

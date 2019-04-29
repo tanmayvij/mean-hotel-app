@@ -51,7 +51,7 @@ export class AuthComponent implements OnInit {
     }
     login()
     {
-        let url: string = 'http://35.196.35.2:8080/api/users/login';
+        let url: string = '/api/users/login';
         this.data.postData(url, this.loginForm.value).subscribe(data => {
             let token : string = data['token'];
             sessionStorage.setItem('token', token);
@@ -62,7 +62,7 @@ export class AuthComponent implements OnInit {
     }
     register()
     {
-        let url: string = 'http://35.196.35.2:8080/api/users/register';
+        let url: string = '/api/users/register';
         this.data.postData(url, this.regForm.value).subscribe(data => {
         console.log(data);
         this.regForm.reset();
@@ -74,7 +74,7 @@ export class AuthComponent implements OnInit {
     }
     forgot()
     {
-        let url: string = 'http://35.196.35.2:8080/api/users/forgot';
+        let url: string = '/api/users/forgot';
         this.data.postData(url, this.forgotForm.value).subscribe(data => {
             // Hide user id field and show token field
             this.emailSent = true;
@@ -85,7 +85,7 @@ export class AuthComponent implements OnInit {
     reset()
     {
         let resetParams: Object = this.forgotForm.value;
-        let url: string = 'http://35.196.35.2:8080/api/users/resetpass?';
+        let url: string = '/api/users/resetpass?';
         for (let entry in resetParams) {
             url += entry + '=' + encodeURIComponent(resetParams[entry]) + '&';
         }

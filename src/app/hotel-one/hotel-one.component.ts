@@ -31,7 +31,7 @@ export class HotelOneComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.url = "http://35.196.35.2:8080/api/hotels/" + this.route.snapshot.params.hotelId;
+    this.url = "/api/hotels/" + this.route.snapshot.params.hotelId;
     this.data.getData(this.url).subscribe(data => {
       this.hotel = data;
       console.log(data)
@@ -48,7 +48,7 @@ export class HotelOneComponent implements OnInit {
       "review": this.revForm.controls.review.value,
       "rating": this.revForm.controls.rating.value
     };
-    let url: string = `http://35.196.35.2:8080/api/hotels/${this.route.snapshot.params.hotelId}/reviews`;
+    let url: string = `/api/hotels/${this.route.snapshot.params.hotelId}/reviews`;
     this.data.postData(url, review).subscribe(data => {
       console.log(data);
       this.getReviews();
@@ -59,7 +59,7 @@ export class HotelOneComponent implements OnInit {
   }
 
   getReviews() {
-    let url = `http://35.196.35.2:8080/api/hotels/${this.route.snapshot.params.hotelId}/reviews`;
+  let url = `/api/hotels/${this.route.snapshot.params.hotelId}/reviews`;
     this.data.getData(url).subscribe(data => {
       this.reviews = data;
     },

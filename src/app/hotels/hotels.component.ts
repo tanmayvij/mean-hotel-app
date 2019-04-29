@@ -22,7 +22,7 @@ export class HotelsComponent implements OnInit {
 
   getHotels()
   {
-    this.url = "http://35.196.35.2:8080/api/hotels";
+    this.url = "/api/hotels";
     var params = this.router.url.split('?');
     if(params[1])
     this.url += '?' + params[1];
@@ -39,7 +39,7 @@ export class HotelsComponent implements OnInit {
   }
   delete(id)
   {
-    this.url = `http://35.196.35.2:8080/api/hotels/${id}`;
+    this.url = `/api/hotels/${id}`;
     this.data.deleteData(this.url).subscribe(data => {
       this.getHotels();
       console.log(data)
