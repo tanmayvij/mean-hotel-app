@@ -16,8 +16,9 @@ export class AdminComponent implements OnInit {
   hotelForm : FormGroup;
   revSubmitted: boolean;
   editClicked: boolean = false;
-  editReview: Object = {
+  editReview: any = {
     "name": "",
+    "_id": "",
     "id": "",
     "review": "",
     "rating": ""
